@@ -24,13 +24,13 @@ class YOLOLoss(nn.Module):
         self.lambda_obj = 1
         self.lambda_box = 10
         
-    def froward(self, predictions, target, anchors):
+    def forward(self, predictions, target, anchors):
         obj = target[..., 0] == 1
         noobj = target[..., 0] == 0
         
         # no object loss
         no_object_loss = self.bce(
-            (predictions[..., 0:1]), (target[..., 0:1][noobj]),   
+            (predictions[..., 0:1][noobj]), (target[..., 0:1][noobj]),   
         )
         
         # object loss
